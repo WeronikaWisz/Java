@@ -153,8 +153,27 @@ public class Matrix {
         return div;
     } // dzieli każdy element przez skalar w
 
-    Matrix dot(Matrix m){
+     Matrix dot(Matrix m){
+        Matrix dot = new Matrix(this.rows, m.cols);
+        for (int i = 0; i < this.rows; i++) {
+            for (int k = 0; k < m.cols; k++) {
+                for (int j = 0; j < m.rows; j++) {
+                    dot.data[i * cols + k] += this.data[i * cols + j] * m.data[j * cols + k];
+                }
+            }
+        }
+        return dot;
+    }
 
+    double frobenius(){
+        double frob = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                frob += pow(data[i * cols + j],2);
+            }
+        }
+        frob = sqrt(frob);
+        return frob;
     }
 
     public static void main(String[] args) {
