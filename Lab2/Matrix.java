@@ -169,16 +169,25 @@ public class Matrix {
         double frob = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                frob += pow(data[i * cols + j],2);
+                frob += Math.pow(data[i * cols + j],2);
             }
         }
-        frob = sqrt(frob);
+        frob = Math.sqrt(frob);
         return frob;
     }
 
     public static void main(String[] args) {
-        Matrix n = new Matrix(10,10);
+        Matrix s = new Matrix(10,10);
+        System.out.println(s);
+        Matrix n = new Matrix(new double[][]{{1,2},{5,6},{7,8}});
+        Matrix m = new Matrix(new double[][]{{3,4},{5,6}});
         System.out.println(n);
+        System.out.println(m);
+        Matrix dot = n.dot(m);
+        System.out.println(dot);
+        double fro = m.frobenius();
+        System.out.println(fro);
+        
     }
 
 }
