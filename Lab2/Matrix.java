@@ -107,6 +107,9 @@ public class Matrix {
         Matrix div = new Matrix(rows,cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
+                if(m.data[i * cols + j] == 0) {
+                    throw new ArithmeticException("Cannot divide by zero");
+                }
                 div.data[i * cols + j] = this.data[i * cols + j] / m.data[i * cols + j];
             }
         }
@@ -144,6 +147,9 @@ public class Matrix {
     } // mnoży każdy element przez skalar w
 
     Matrix div(double w){
+        if(w==0){
+            throw new ArithmeticException("Cannot divide by zero");
+        }
         Matrix div = new Matrix(rows,cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
