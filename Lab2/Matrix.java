@@ -50,7 +50,7 @@ public class Matrix {
         for(int i=0;i<rows;i++){
             buf.append("[");
             for(int j=0;j<cols;j++){
-                buf.append(data[i*cols + j]);
+                buf.append(data[i*cols + j]+" ");
             }
             buf.append("]\n");
         }
@@ -180,6 +180,17 @@ public class Matrix {
         }
         frob = Math.sqrt(frob);
         return frob;
+    }
+    
+    public static Matrix random(int rows, int cols){
+        Matrix m = new Matrix(rows,cols);
+        Random r = new Random();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                m.set(i, j, r.nextDouble());
+            }
+        }
+        return m;
     }
 
     public static void main(String[] args) {
