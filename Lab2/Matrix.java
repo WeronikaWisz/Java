@@ -192,6 +192,18 @@ public class Matrix {
         }
         return m;
     }
+    
+    public static Matrix eye(int n){
+        Matrix m = new Matrix(n,n);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if(i==j){
+                    m.set(i,j,1);
+                }
+            }
+        }
+        return m;
+    }
 
     public static void main(String[] args) {
         Matrix s = new Matrix(10,10);
@@ -204,6 +216,10 @@ public class Matrix {
         System.out.println(dot);
         double fro = m.frobenius();
         System.out.println(fro);
+        Matrix r = Matrix.random(2,3);
+        System.out.println(r);
+        Matrix e = Matrix.eye(4);
+        System.out.println(e);
         
     }
 
