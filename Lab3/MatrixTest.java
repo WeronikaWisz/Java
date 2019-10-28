@@ -19,7 +19,7 @@ public class MatrixTest {
             assertEquals(3,t[k].length);
         }
         for (int i = 0; i < t.length; i++) {
-            for (int j = t[i].length; j < d[i].length; j--) {
+            for (int j = t[i].length-1; j > d[i].length-1; j--) {
                 assertEquals(0,t[i][j],0.001);
             }
         }
