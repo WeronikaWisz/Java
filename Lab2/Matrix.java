@@ -164,7 +164,7 @@ public class Matrix {
         for (int i = 0; i < this.rows; i++) {
             for (int k = 0; k < m.cols; k++) {
                 for (int j = 0; j < m.rows; j++) {
-                    dot.data[i * cols + k] += this.data[i * cols + j] * m.data[j * cols + k];
+                    dot.data[i * dot.cols + k] += this.data[i * this.cols + j] * m.data[j * m.cols + k];
                 }
             }
         }
