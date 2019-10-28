@@ -174,9 +174,9 @@ public class MatrixTest {
 
     @org.junit.Test
     public void dot() {
-        Matrix m = new Matrix(new double[][]{{3,4,6},{0,3,5},{1,7,9}});
-        Matrix n = new Matrix(new double[][]{{2,4,0},{5,3,7},{0,1,1}});
-        Matrix w = new Matrix(new double[][]{{26,30,34},{15,14,26},{37,34,58}});
+        Matrix m = new Matrix(new double[][]{{3,4,6,1},{0,3,5},{1,7,9,7}});
+        Matrix n = new Matrix(new double[][]{{2,4,0},{5,3,7},{0,1,1},{2,6,3}});
+        Matrix w = new Matrix(new double[][]{{28,36,37},{15,14,26},{51,76,79}});
         Matrix d = m.dot(n);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
