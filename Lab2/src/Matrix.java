@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Matrix {
     double[] data;
     int rows;
@@ -159,7 +161,7 @@ public class Matrix {
         return div;
     } // dzieli każdy element przez skalar w
 
-     Matrix dot(Matrix m){
+    Matrix dot(Matrix m){
         Matrix dot = new Matrix(this.rows, m.cols);
         for (int i = 0; i < this.rows; i++) {
             for (int k = 0; k < m.cols; k++) {
@@ -172,16 +174,16 @@ public class Matrix {
     }
 
     double frobenius(){
-        double frob = 0;
+        double fro = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                frob += Math.pow(data[i * cols + j],2);
+                fro += Math.pow(data[i * cols + j],2);
             }
         }
-        frob = Math.sqrt(frob);
-        return frob;
+        fro = Math.sqrt(fro);
+        return fro;
     }
-    
+
     public static Matrix random(int rows, int cols){
         Matrix m = new Matrix(rows,cols);
         Random r = new Random();
@@ -192,7 +194,7 @@ public class Matrix {
         }
         return m;
     }
-    
+
     public static Matrix eye(int n){
         Matrix m = new Matrix(n,n);
         for (int i = 0; i < n; i++) {
@@ -205,9 +207,94 @@ public class Matrix {
         return m;
     }
 
+    public Matrix transpose(){
+        Matrix transposed = new Matrix(cols,rows);
+
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
+                transposed.set(x, y, get(y, x));
+            }
+        }
+
+        return transposed;
+    }
+
+    public Matrix minor(int row, int col) {
+        Matrix minor = new Matrix(rows - 1, cols - 1);
+
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
+                if (y != row && x != col) {
+                    minor.set(y < row ? y : y - 1, x < col ? x : x - 1, get(y, x));
+                }
+            }
+        }
+
+        return minor;
+    }
+
+    public double determinant() {
+        if (rows != cols) {
+            throw new IllegalStateException("Non-square matrix");
+        }
+
+        if (rows == 1) {
+            return get(0, 0);
+        }
+
+        if (rows == 2) {
+            return get(0, 0) * get(1, 1) - get(0, 1) * get(1, 0);
+        }
+
+        double determinant = 0;
+
+        for (int i = 0; i < cols; i++) {
+            determinant += Math.pow(-1, i) * get(0, i) * minor(0, i).determinant();
+        }
+
+        return determinant;
+    }
+
+    public Matrix inverse() {
+        double determinant = determinant();
+
+        if (determinant == 0) {
+            throw new IllegalStateException("Inverse of matrix with 0 determinant is not possible");
+        }
+
+        Matrix inverse = new Matrix(rows, cols);
+
+        for (int y = 0; y < inverse.rows; y++) {
+            for (int x = 0; x < inverse.cols; x++) {
+                inverse.set(y, x, Math.pow(-1, y + x) * minor(y, x).determinant() + 0.0);
+            }
+        }
+
+        double det = 1.0 / determinant;
+        inverse.mul(det);
+        inverse.transpose();
+        return inverse;
+    }
+
+    //kartkowkaA
+
+    Matrix getColumn(int i){
+
+        if(i >= cols) {
+            throw new IllegalStateException(String.format("There is only %d columns", cols));
+        }
+
+        Matrix m = new Matrix(1,cols);
+            for (int j = 0; j < cols; j++) {
+                m.set(0, j, data[j*cols+i]);
+            }
+        return m;
+    }
+
     public static void main(String[] args) {
-        Matrix s = new Matrix(10,10);
-        System.out.println(s);
+        Matrix ma = new Matrix(new double[][]{{1,2,3},{4,5,6},{7,8,9}});
+        Matrix col = ma.getColumn(0);
+        System.out.println(col);
         Matrix n = new Matrix(new double[][]{{1,2},{5,6},{7,8}});
         Matrix m = new Matrix(new double[][]{{3,4},{5,6}});
         System.out.println(n);
@@ -220,7 +307,6 @@ public class Matrix {
         System.out.println(r);
         Matrix e = Matrix.eye(4);
         System.out.println(e);
-        
+        System.out.print(n.transpose());
     }
-
 }
